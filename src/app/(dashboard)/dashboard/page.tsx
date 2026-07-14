@@ -343,6 +343,12 @@ function DashboardContent() {
                   </Link>
                 </Button>
                 <Button asChild size="sm" variant="outline">
+                  <Link href="/items/categories">
+                    <Settings className="h-4 w-4" />
+                    Manage categories
+                  </Link>
+                </Button>
+                <Button asChild size="sm" variant="outline">
                   <Link href="/items/orders">
                     <Package className="h-4 w-4" />
                     Manage orders

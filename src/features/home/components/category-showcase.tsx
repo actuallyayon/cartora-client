@@ -1,48 +1,38 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { useCategories } from '@/features/catalog/use-catalog';
 
-/** The four apparel categories with real imagery, deep-linking into Explore. */
-const categories = [
-  {
-    name: "Men's",
-    slug: 'mens',
-    image:
-      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: "Women's",
-    slug: 'womens',
-    image:
-      'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: 'Kids',
-    slug: 'kids',
-    image:
-      'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: 'Accessories',
-    slug: 'accessories',
-    image:
-      'https://images.unsplash.com/photo-1564859228273-274232fdb516?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: 'Footwear',
-    slug: 'footwear',
-    image:
-      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80',
-  },
-  {
-    name: 'Sports',
-    slug: 'sports',
-    image:
-      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80',
-  },
-];
+/** Fallbacks keep the storefront complete before category images are configured. */
+const categoryImageFallbacks: Record<string, string> = {
+  mens: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80',
+  womens: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=800&q=80',
+  kids: 'https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=800&q=80',
+  accessories: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80',
+  footwear: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80',
+  sports: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80',
+};
+
+const fallbackCategories = [
+  { name: "Men's", slug: 'mens' },
+  { name: "Women's", slug: 'womens' },
+  { name: 'Kids', slug: 'kids' },
+  { name: 'Accessories', slug: 'accessories' },
+  { name: 'Footwear', slug: 'footwear' },
+  { name: 'Sports', slug: 'sports' },
+].map((category) => ({ ...category, image: categoryImageFallbacks[category.slug] }));
 
 export function CategoryShowcase() {
+  const { data } = useCategories();
+  const categories = data?.length
+    ? data.map((category) => ({
+        ...category,
+        image: category.image || categoryImageFallbacks[category.slug] || categoryImageFallbacks.accessories,
+      }))
+    : fallbackCategories;
+
   return (
     <section id="categories" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mb-6 flex items-end justify-between">
@@ -67,11 +57,9 @@ export function CategoryShowcase() {
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-4 flex flex-col gap-2">
+            <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-4">
               <h3 className="text-lg font-semibold text-white">{cat.name}</h3>
-              <Button variant="secondary" size="sm" className="w-fit">
-                Shop now
-              </Button>
+              <Button variant="secondary" size="sm" className="w-fit">Shop now</Button>
             </div>
           </Link>
         ))}

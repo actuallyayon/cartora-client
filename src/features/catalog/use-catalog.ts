@@ -2,7 +2,7 @@
 
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { catalogApi } from '@/features/catalog/catalog.api';
-import type { CreateProductPayload, ProductListParams, UpdateProductPayload } from '@/features/catalog/catalog.types';
+import type { Category, CreateProductPayload, ProductListParams, UpdateProductPayload } from '@/features/catalog/catalog.types';
 
 export const catalogKeys = {
   categories: ['categories'] as const,
@@ -45,6 +45,17 @@ export function useRelatedProducts(idOrSlug: string) {
 
 export function useUploadImage() {
   return useMutation({ mutationFn: (file: File) => catalogApi.uploadImage(file) });
+}
+
+export function useUpdateCategory() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, payload }: { id: string; payload: Partial<Pick<Category, 'name' | 'description' | 'image' | 'isActive'>> }) =>
+      catalogApi.updateCategory(id, payload),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: catalogKeys.categories });
+    },
+  });
 }
 
 export function useCreateProduct() {

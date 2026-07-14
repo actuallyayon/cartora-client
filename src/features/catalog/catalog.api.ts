@@ -19,6 +19,11 @@ export const catalogApi = {
     return data.data;
   },
 
+  async updateCategory(id: string, payload: Partial<Pick<Category, 'name' | 'description' | 'image' | 'isActive'>>): Promise<Category> {
+    const { data } = await api.patch<ApiResponse<Category>>(`/categories/${id}`, payload);
+    return data.data;
+  },
+
   async getProducts(params: ProductListParams): Promise<ProductListResult> {
     const { data } = await api.get<ApiResponse<Product[]>>('/products', { params });
     const m = data.meta;
