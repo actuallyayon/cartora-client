@@ -645,13 +645,12 @@ function DashboardContent() {
                   });
 
                   return (
-                    <Link
+                    <div
                       key={order.id}
-                      href={`/dashboard/orders/${order.orderNumber}`}
-                      className="flex items-center justify-between px-6 py-4 hover:bg-muted/15 transition-colors group"
+                      className="flex items-center justify-between px-6 py-4 transition-colors"
                     >
                       <div className="space-y-1 text-xs">
-                        <p className="font-mono font-semibold text-foreground group-hover:text-primary transition-colors">
+                        <p className="font-mono font-semibold text-foreground transition-colors">
                           {order.orderNumber}
                         </p>
                         <div className="flex items-center gap-3 text-muted-foreground">
@@ -670,9 +669,8 @@ function DashboardContent() {
                         <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold capitalize ${getStatusColor(order.orderStatus)}`}>
                           {order.orderStatus}
                         </span>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
                       </div>
-                    </Link>
+                    </div>
                   );
                 })}
               </div>
