@@ -28,9 +28,9 @@ export function ProductCard({ product }: { product: Product }) {
 
   const wished = wishlistIds?.includes(product.id) ?? false;
   const discount = discountPercent(product.price, product.compareAtPrice);
-  const hasVariants = product.variants && product.variants.length > 0;
+  const hasVariants = product.variants && product.variants.length > 0 && product.variants.some((v) => v.stock > 0);
   const outOfStock = hasVariants
-    ? product.variants.every((v) => v.stock <= 0) && product.stock <= 0
+    ? product.variants.every((v) => v.stock <= 0)
     : product.stock <= 0;
 
   const requireAuth = (): boolean => {
