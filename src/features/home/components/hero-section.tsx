@@ -107,13 +107,18 @@ export function HeroSection() {
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={index}
-            initial={{ opacity: 0, x: direction * 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -direction * 50 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 28 }}
+            initial={{ opacity: 0, x: direction * 40, scale: 0.98 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -direction * 40, scale: 0.98 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-center justify-center"
           >
-            <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl text-foreground">
+            <motion.h1
+              initial={{ opacity: 0, y: 20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ delay: 0.1, duration: 0.55, ease: 'easeOut' }}
+              className="max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl text-foreground"
+            >
               {slide.title === 'Unlock Extra Savings â€” Up to 15% Off!' ? (
                 <>
                   Unlock Extra Savings â€” Up to <span className="text-orange-500">15%</span> Off!
@@ -129,13 +134,23 @@ export function HeroSection() {
                   slide.title
                 )
               )}
-            </h1>
+            </motion.h1>
 
-            <p className="text-muted-foreground mt-5 max-w-xl text-lg text-pretty leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.24, duration: 0.5, ease: 'easeOut' }}
+              className="text-muted-foreground mt-5 max-w-xl text-lg text-pretty leading-relaxed"
+            >
               {slide.description}
-            </p>
+            </motion.p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row select-none">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.38, duration: 0.5, ease: 'easeOut' }}
+              className="mt-8 flex flex-col gap-3 select-none sm:flex-row"
+            >
               <Button asChild size="lg">
                 <Link href={slide.primaryCtaLink}>
                   {slide.primaryCtaText}
@@ -145,7 +160,7 @@ export function HeroSection() {
               <Button asChild size="lg" variant="outline">
                 <Link href={slide.secondaryCtaLink}>{slide.secondaryCtaText}</Link>
               </Button>
-            </div>
+            </motion.div>
           </motion.div>
         </AnimatePresence>
 
