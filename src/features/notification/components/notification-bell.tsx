@@ -124,14 +124,7 @@ export function NotificationBell() {
                     <p className="text-muted-foreground leading-relaxed">
                       {n.message}
                     </p>
-                    {n.link && (
-                      <Link
-                        href={n.link}
-                        className="text-primary hover:underline font-medium mt-1 block"
-                      >
-                        View details
-                      </Link>
-                    )}
+
                   </div>
                   {!n.isRead && (
                     <button
