@@ -98,16 +98,16 @@ function PaymentForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-md border p-4 bg-background">
-        <Label className="mb-2 block text-sm font-medium">Card details</Label>
+      <div className="rounded-md border p-4 bg-white dark:bg-white">
+        <Label className="mb-2 block text-sm font-medium text-slate-900 dark:text-slate-900">Card details</Label>
         <CardElement
           options={{
             style: {
               base: {
                 fontSize: '16px',
-                color: isDark ? '#f8f9fa' : '#0f172a',
+                color: '#0f172a',
                 '::placeholder': {
-                  color: isDark ? '#9ca3af' : '#64748b',
+                  color: '#64748b',
                 },
               },
               invalid: {
