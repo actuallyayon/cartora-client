@@ -119,7 +119,7 @@ export function ProductCard({ product }: { product: Product }) {
           variant={outOfStock ? 'secondary' : 'default'}
         >
           {hasVariants ? null : <ShoppingCart />}
-          {outOfStock ? 'Unavailable' : hasVariants ? 'Select options' : 'Add to cart'}
+          {outOfStock ? 'Out of stock' : hasVariants ? 'Select options' : 'Add to cart'}
         </Button>
       </div>
     </div>
