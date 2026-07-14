@@ -30,7 +30,7 @@ export function ProductCard({ product }: { product: Product }) {
   const discount = discountPercent(product.price, product.compareAtPrice);
   const hasVariants = product.variants && product.variants.length > 0;
   const outOfStock = hasVariants
-    ? product.variants.every((v) => v.stock <= 0)
+    ? product.variants.every((v) => v.stock <= 0) && product.stock <= 0
     : product.stock <= 0;
 
   const requireAuth = (): boolean => {
@@ -119,7 +119,7 @@ export function ProductCard({ product }: { product: Product }) {
           variant={outOfStock ? 'secondary' : 'default'}
         >
           {hasVariants ? null : <ShoppingCart />}
-          {outOfStock ? 'Out of stock' : hasVariants ? 'Select options' : 'Add to cart'}
+          {outOfStock ? 'Unavailable' : hasVariants ? 'Select options' : 'Add to cart'}
         </Button>
       </div>
     </div>
