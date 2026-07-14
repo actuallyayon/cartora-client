@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { RequireAuth } from '@/features/auth/components/require-auth';
+import { useTheme } from 'next-themes';
 import { useCart } from '@/features/cart/use-cart';
 import { useCheckout, useValidateCoupon } from '@/features/checkout/use-checkout';
 import { formatPrice } from '@/lib/format';
@@ -49,6 +50,7 @@ function PaymentForm({
   currency?: string;
   onSuccess: (orderNumber: string) => void;
 }) {
+  const { resolvedTheme } = useTheme();
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = React.useState(false);
@@ -92,6 +94,8 @@ function PaymentForm({
     }
   };
 
+  const isDark = resolvedTheme === 'dark';
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="rounded-md border p-4 bg-background">
@@ -101,13 +105,13 @@ function PaymentForm({
             style: {
               base: {
                 fontSize: '16px',
-                color: 'oklch(0.145 0.018 266.495)',
+                color: isDark ? '#f8f9fa' : '#0f172a',
                 '::placeholder': {
-                  color: 'oklch(0.551 0.027 264.364)',
+                  color: isDark ? '#9ca3af' : '#64748b',
                 },
               },
               invalid: {
-                color: 'oklch(0.637 0.237 25.331)',
+                color: '#ef4444',
               },
             },
           }}
