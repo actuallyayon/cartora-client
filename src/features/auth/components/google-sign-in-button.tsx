@@ -42,12 +42,12 @@ export function GoogleSignInButton({ redirectTo }: GoogleSignInButtonProps) {
   };
 
   return (
-    <div className="flex justify-center [&>div]:w-full">
+    <div className="flex w-full justify-center">
       <GoogleLogin
         onSuccess={handleSuccess}
         onError={() => toast.error('Google sign-in was cancelled.')}
         size="large"
-        width="100%"
+        width="340"
         text="continue_with"
         shape="rectangular"
         theme="outline"
