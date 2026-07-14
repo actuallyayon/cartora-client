@@ -137,7 +137,7 @@ export function Navbar() {
         <div className="border-border bg-background border-t md:hidden">
           <ul className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3">
             <li className="flex items-center justify-end gap-2 border-b border-border pb-3">
-              {isAuthenticated ? <NotificationBell /> : null}
+              {isAuthenticated ? <NotificationBell mobile /> : null}
               <ThemeToggle />
             </li>
             {links.map((link) => (

@@ -12,7 +12,11 @@ import {
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 
-export function NotificationBell() {
+interface NotificationBellProps {
+  mobile?: boolean;
+}
+
+export function NotificationBell({ mobile = false }: NotificationBellProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
 
@@ -74,7 +78,14 @@ export function NotificationBell() {
       </Button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 origin-top-right rounded-lg border border-border bg-card text-card-foreground shadow-lg focus:outline-none z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
+        <div
+          className={cn(
+            'z-50 overflow-hidden rounded-lg border border-border bg-card text-card-foreground shadow-lg focus:outline-none animate-in fade-in slide-in-from-top-2 duration-150',
+            mobile
+              ? 'fixed top-20 left-1/2 w-[calc(100vw-2rem)] -translate-x-1/2'
+              : 'absolute right-0 mt-2 w-80 origin-top-right sm:w-96',
+          )}
+        >
           <div className="flex items-center justify-between border-b border-border px-4 py-3 bg-muted/40">
             <h3 className="text-sm font-semibold">Notifications</h3>
             {unreadCount > 0 && (
