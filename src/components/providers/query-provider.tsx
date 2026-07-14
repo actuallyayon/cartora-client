@@ -27,16 +27,9 @@ export function QueryProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const handleLogout = () => {
-      // Prevent infinite loops if we are already on the login page
-      if (window.location.pathname !== '/login') {
-        queryClient.clear();
-        queryClient.setQueryData(['auth', 'me'], null);
-        toast.error('Your session has expired. Please sign in again.');
-        router.push('/login');
-      } else {
-        // If we are already on login, just ensure the current user is null
-        queryClient.setQueryData(['auth', 'me'], null);
-      }
+      // Just ensure the client knows we are logged out.
+      // Do not forcefully redirect or toast, as this runs for anonymous users too!
+      queryClient.setQueryData(['auth', 'me'], null);
     };
 
     window.addEventListener('auth:logout', handleLogout);
