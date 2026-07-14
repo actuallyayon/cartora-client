@@ -1,14 +1,17 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useState, useEffect, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 /**
  * TanStack Query provider. The client is created inside state so it's stable
  * across re-renders and never shared between requests on the server.
  */
 export function QueryProvider({ children }: { children: ReactNode }) {
+  const router = useRouter();
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -21,6 +24,17 @@ export function QueryProvider({ children }: { children: ReactNode }) {
         },
       }),
   );
+
+  useEffect(() => {
+    const handleLogout = () => {
+      queryClient.clear();
+      toast.error('Your session has expired. Please sign in again.');
+      router.push('/login');
+    };
+
+    window.addEventListener('auth:logout', handleLogout);
+    return () => window.removeEventListener('auth:logout', handleLogout);
+  }, [queryClient, router]);
 
   return (
     <QueryClientProvider client={queryClient}>

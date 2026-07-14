@@ -54,7 +54,10 @@ api.interceptors.response.use(
         await refreshTokens();
         return api(original);
       } catch {
-        // Refresh failed — fall through and reject with the original error.
+        // Refresh failed — the user's session is dead. Force them out.
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new Event('auth:logout'));
+        }
       }
     }
 
