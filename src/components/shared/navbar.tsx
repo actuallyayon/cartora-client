@@ -11,6 +11,7 @@ import { ThemeToggle } from '@/components/shared/theme-toggle';
 import { CartButton } from '@/features/cart/components/cart-button';
 import { WishlistButton } from '@/features/wishlist/components/wishlist-button';
 import { NotificationBell } from '@/features/notification/components/notification-bell';
+import { useNotifications } from '@/features/notification/use-notification';
 import { useAuth, useLogout } from '@/features/auth/use-auth';
 
 /**
@@ -22,6 +23,7 @@ export function Navbar() {
   const pathname = usePathname();
   const { user, isAuthenticated } = useAuth();
   const logout = useLogout();
+  const { data: notifications = [] } = useNotifications(isAuthenticated);
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
@@ -34,6 +36,7 @@ export function Navbar() {
 
   const links = isAuthenticated ? authNavLinks : publicNavLinks;
   const initial = user?.name?.charAt(0).toUpperCase() ?? '?';
+  const hasUnreadNotifications = notifications.some((notification) => !notification.isRead);
 
   return (
     <header
@@ -111,16 +114,21 @@ export function Navbar() {
         <div className="flex items-center gap-1 md:hidden">
           <WishlistButton />
           <CartButton />
-          {isAuthenticated ? <NotificationBell /> : null}
-          <ThemeToggle />
           <Button
             variant="ghost"
             size="icon"
+            className="relative"
             aria-label="Toggle menu"
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X /> : <Menu />}
+            {isAuthenticated && hasUnreadNotifications ? (
+              <span
+                className="absolute top-1 right-1 h-2 w-2 rounded-full bg-orange-500 ring-2 ring-background"
+                aria-label="Unread notifications"
+              />
+            ) : null}
           </Button>
         </div>
       </nav>
@@ -128,6 +136,10 @@ export function Navbar() {
       {open ? (
         <div className="border-border bg-background border-t md:hidden">
           <ul className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3">
+            <li className="flex items-center justify-end gap-2 border-b border-border pb-3">
+              {isAuthenticated ? <NotificationBell /> : null}
+              <ThemeToggle />
+            </li>
             {links.map((link) => (
               <li key={link.href}>
                 <Link

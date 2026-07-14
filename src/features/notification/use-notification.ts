@@ -7,10 +7,11 @@ export const notificationKeys = {
   all: ['notifications'] as const,
 };
 
-export function useNotifications() {
+export function useNotifications(enabled = true) {
   return useQuery({
     queryKey: notificationKeys.all,
     queryFn: () => notificationApi.getNotifications(),
+    enabled,
     refetchInterval: 30000, // Poll every 30 seconds for order updates
   });
 }

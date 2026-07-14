@@ -16,6 +16,8 @@ interface Slide {
   secondaryCtaText: string;
   secondaryCtaLink: string;
   gradient: string;
+  highlight?: string;
+  displayTitle?: string;
 }
 
 const slides: Slide[] = [
@@ -40,6 +42,8 @@ const slides: Slide[] = [
     secondaryCtaText: 'View catalog',
     secondaryCtaLink: '/explore',
     gradient: 'from-emerald-500/10 via-teal-500/10 to-transparent',
+    highlight: '15%',
+    displayTitle: 'Unlock Extra Savings Up to 15% Off!',
   },
   {
     id: 3,
@@ -52,7 +56,7 @@ const slides: Slide[] = [
     secondaryCtaLink: '#categories',
     gradient: 'from-amber-500/10 via-orange-500/10 to-transparent',
   },
-];
+].filter((slide) => slide.title !== 'Discover. Compare. Shop Smarter.');
 
 export function HeroSection() {
   const [index, setIndex] = React.useState(0);
@@ -86,7 +90,11 @@ export function HeroSection() {
     startTimer();
   };
 
-  const slide = slides[index];
+  const activeSlide = slides[index];
+  const slide = {
+    ...activeSlide,
+    title: activeSlide.displayTitle ?? activeSlide.title,
+  };
 
   return (
     <section className="border-border relative overflow-hidden border-b min-h-[65vh] flex items-center bg-background">
@@ -111,12 +119,20 @@ export function HeroSection() {
             </span>
 
             <h1 className="mt-6 max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl text-foreground">
-              {index === 0 ? (
+              {slide.title === 'Unlock Extra Savings â€” Up to 15% Off!' ? (
                 <>
-                  Discover. Compare. <span className="text-primary">Shop Smarter.</span>
+                  Unlock Extra Savings â€” Up to <span className="text-orange-500">15%</span> Off!
                 </>
               ) : (
-                slide.title
+                slide.highlight ? (
+                  <>
+                    {(slide.displayTitle ?? slide.title).split(slide.highlight)[0]}
+                    <span className="text-orange-500">{slide.highlight}</span>
+                    {(slide.displayTitle ?? slide.title).split(slide.highlight)[1]}
+                  </>
+                ) : (
+                  slide.title
+                )
               )}
             </h1>
 
