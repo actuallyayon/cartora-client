@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 /** The four apparel categories with real imagery, deep-linking into Explore. */
 const categories = [
@@ -66,9 +67,11 @@ export function CategoryShowcase() {
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-4">
+            <div className="absolute inset-x-0 bottom-0 p-4 flex flex-col gap-2">
               <h3 className="text-lg font-semibold text-white">{cat.name}</h3>
-              <span className="text-sm text-white/80 group-hover:underline">Shop now →</span>
+              <Button variant="secondary" size="sm" className="w-fit">
+                Shop now
+              </Button>
             </div>
           </Link>
         ))}
