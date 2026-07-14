@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface Slide {
@@ -113,12 +113,7 @@ export function HeroSection() {
             transition={{ type: 'spring', stiffness: 260, damping: 28 }}
             className="flex flex-col items-center justify-center"
           >
-            <span className="border-border bg-card/60 text-muted-foreground inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm backdrop-blur-sm shadow-sm select-none">
-              <Sparkles className="text-primary h-4 w-4" />
-              {slide.tag}
-            </span>
-
-            <h1 className="mt-6 max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl text-foreground">
+            <h1 className="max-w-4xl text-4xl font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl text-foreground">
               {slide.title === 'Unlock Extra Savings â€” Up to 15% Off!' ? (
                 <>
                   Unlock Extra Savings â€” Up to <span className="text-orange-500">15%</span> Off!

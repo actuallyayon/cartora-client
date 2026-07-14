@@ -111,3 +111,55 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
+
+@keyframes promo-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes promo-orb-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-1rem, 0.75rem, 0) scale(1.08);
+  }
+}
+
+.promo-banner > :is(p, h2, a) {
+  animation: promo-content-in 600ms ease-out both;
+}
+
+.promo-banner > h2 {
+  animation-delay: 100ms;
+}
+
+.promo-banner > p:nth-of-type(2) {
+  animation-delay: 200ms;
+}
+
+.promo-banner > a {
+  animation-delay: 300ms;
+}
+
+.promo-banner-orb {
+  animation: promo-orb-float 8s ease-in-out infinite;
+}
+
+.promo-banner-orb-bottom {
+  animation-delay: -4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-banner > :is(p, h2, a),
+  .promo-banner-orb {
+    animation: none;
+  }
+}
