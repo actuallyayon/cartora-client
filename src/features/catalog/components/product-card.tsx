@@ -28,7 +28,10 @@ export function ProductCard({ product }: { product: Product }) {
 
   const wished = wishlistIds?.includes(product.id) ?? false;
   const discount = discountPercent(product.price, product.compareAtPrice);
-  const outOfStock = product.stock <= 0;
+  const hasVariants = product.variants && product.variants.length > 0;
+  const outOfStock = hasVariants
+    ? product.variants.every((v) => v.stock <= 0)
+    : product.stock <= 0;
 
   const requireAuth = (): boolean => {
     if (!isAuthenticated) {
@@ -47,6 +50,10 @@ export function ProductCard({ product }: { product: Product }) {
 
   const onAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (hasVariants) {
+      router.push(`/products/${product.slug}`);
+      return;
+    }
     if (!requireAuth()) return;
     addToCart.add(product.id, 1);
   };
@@ -111,8 +118,8 @@ export function ProductCard({ product }: { product: Product }) {
           disabled={outOfStock || addToCart.isPending}
           variant={outOfStock ? 'secondary' : 'default'}
         >
-          <ShoppingCart />
-          {outOfStock ? 'Unavailable' : 'Add to cart'}
+          {hasVariants ? null : <ShoppingCart />}
+          {outOfStock ? 'Unavailable' : hasVariants ? 'Select options' : 'Add to cart'}
         </Button>
       </div>
     </div>
