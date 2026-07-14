@@ -229,9 +229,15 @@ function CheckoutContent() {
           toast.success('Shipping address locked. Please process payment.');
         },
         onError: (err) => {
-          const msg = axios.isAxiosError(err)
-            ? ((err.response?.data as { message?: string })?.message ?? 'Failed to initiate checkout.')
-            : 'Failed to initiate checkout.';
+          let msg = 'Failed to initiate checkout.';
+          if (axios.isAxiosError(err) && err.response?.data) {
+            const data = err.response.data as { message?: string; errors?: { path: string; message: string }[] };
+            if (data.errors && data.errors.length > 0) {
+              msg = data.errors.map(e => e.message).join('\n');
+            } else if (data.message) {
+              msg = data.message;
+            }
+          }
           toast.error(msg);
         },
       }
