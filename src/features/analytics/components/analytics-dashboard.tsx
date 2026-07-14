@@ -176,17 +176,17 @@ export function AnalyticsDashboard() {
               <AreaChart data={revenueOverTime} margin={{ top: 10, right: 30, left: 10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.0} />
+                    <stop offset="5%" stopColor="var(--primary)" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="var(--primary)" stopOpacity={0.0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                 <XAxis
                   dataKey="date"
                   tickLine={false}
                   axisLine={false}
                   fontSize={10}
-                  stroke="hsl(var(--muted-foreground))"
+                  stroke="var(--muted-foreground)"
                   tickFormatter={(str) => {
                     const parts = str.split('-');
                     return parts.length >= 3 ? `${parts[1]}/${parts[2]}` : str;
@@ -196,16 +196,16 @@ export function AnalyticsDashboard() {
                   tickLine={false}
                   axisLine={false}
                   fontSize={10}
-                  stroke="hsl(var(--muted-foreground))"
+                  stroke="var(--muted-foreground)"
                   tickFormatter={(val) => `$${val}`}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    borderColor: 'hsl(var(--border))',
+                    backgroundColor: 'var(--card)',
+                    borderColor: 'var(--border)',
                     borderRadius: '8px',
                     fontSize: '11px',
-                    color: 'hsl(var(--foreground))',
+                    color: 'var(--foreground)',
                   }}
                   formatter={(val: unknown) => {
                     const num = typeof val === 'number' ? val : Number(val) || 0;
@@ -216,7 +216,7 @@ export function AnalyticsDashboard() {
                 <Area
                   type="monotone"
                   dataKey="revenue"
-                  stroke="hsl(var(--primary))"
+                  stroke="var(--primary)"
                   strokeWidth={2}
                   fillOpacity={1}
                   fill="url(#colorRevenue)"
@@ -257,11 +257,11 @@ export function AnalyticsDashboard() {
                       </Pie>
                       <Tooltip
                         contentStyle={{
-                          backgroundColor: 'hsl(var(--card))',
-                          borderColor: 'hsl(var(--border))',
+                          backgroundColor: 'var(--card)',
+                          borderColor: 'var(--border)',
                           borderRadius: '8px',
                           fontSize: '11px',
-                          color: 'hsl(var(--foreground))',
+                          color: 'var(--foreground)',
                         }}
                       />
                     </PieChart>
@@ -300,33 +300,33 @@ export function AnalyticsDashboard() {
           <CardContent className="h-72 pl-0">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={revenueOverTime} margin={{ top: 10, right: 30, left: 10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                 <XAxis
                   dataKey="date"
                   tickLine={false}
                   axisLine={false}
                   fontSize={10}
-                  stroke="hsl(var(--muted-foreground))"
+                  stroke="var(--muted-foreground)"
                   tickFormatter={(str) => {
                     const parts = str.split('-');
                     return parts.length >= 3 ? `${parts[1]}/${parts[2]}` : str;
                   }}
                 />
-                <YAxis tickLine={false} axisLine={false} fontSize={10} stroke="hsl(var(--muted-foreground))" allowDecimals={false} />
+                <YAxis tickLine={false} axisLine={false} fontSize={10} stroke="var(--muted-foreground)" allowDecimals={false} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: 'hsl(var(--card))',
-                    borderColor: 'hsl(var(--border))',
+                    backgroundColor: 'var(--card)',
+                    borderColor: 'var(--border)',
                     borderRadius: '8px',
                     fontSize: '11px',
-                    color: 'hsl(var(--foreground))',
+                    color: 'var(--foreground)',
                   }}
                   formatter={(val: unknown) => {
                     const num = typeof val === 'number' ? val : Number(val) || 0;
                     return [num, 'Orders'];
                   }}
                 />
-                <Bar dataKey="orders" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} maxBarSize={36} />
+                <Bar dataKey="orders" fill="var(--primary)" radius={[4, 4, 0, 0]} maxBarSize={36} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
