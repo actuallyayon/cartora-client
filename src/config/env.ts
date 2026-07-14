@@ -3,7 +3,8 @@
  * the browser. Centralizing them here avoids scattering `process.env` reads and
  * gives us one place to validate/default.
  */
-const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:5000/api/v1';
+// Always use relative URL so Next.js proxies to the backend (fixes third-party cookie blocking)
+const apiUrl = '/api/v1';
 
 export const clientEnv = {
   apiUrl,
