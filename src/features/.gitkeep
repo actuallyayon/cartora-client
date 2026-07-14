@@ -1,0 +1,3 @@
+# Feature modules live here (auth, products, cart, checkout, orders, reviews,
+# dashboard, …). Each feature co-locates its components, hooks, services,
+# validators, and types.
