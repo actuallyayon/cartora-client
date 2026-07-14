@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { GoogleLogin, type CredentialResponse } from '@react-oauth/google';
 import axios from 'axios';
 import { toast } from 'sonner';
+import { useTheme } from 'next-themes';
 import { useGoogleSignIn } from '@/features/auth/use-auth';
 
 interface GoogleSignInButtonProps {
@@ -21,6 +22,12 @@ export function GoogleSignInButton({ redirectTo }: GoogleSignInButtonProps) {
   const params = useSearchParams();
   const target = redirectTo ?? params.get('redirect') ?? '/dashboard';
   const googleSignIn = useGoogleSignIn();
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSuccess = (response: CredentialResponse) => {
     if (!response.credential) {
@@ -41,6 +48,14 @@ export function GoogleSignInButton({ redirectTo }: GoogleSignInButtonProps) {
     });
   };
 
+  if (!mounted) {
+    return (
+      <div className="flex w-full justify-center">
+        <div className="h-10 w-[340px] animate-pulse rounded bg-muted" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex w-full justify-center">
       <GoogleLogin
@@ -50,7 +65,7 @@ export function GoogleSignInButton({ redirectTo }: GoogleSignInButtonProps) {
         width="340"
         text="continue_with"
         shape="rectangular"
-        theme="outline"
+        theme={resolvedTheme === 'dark' ? 'filled_black' : 'outline'}
       />
     </div>
   );
