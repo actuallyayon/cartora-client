@@ -176,7 +176,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
               <div className="mt-3 flex flex-wrap gap-2">
                 {allSizes.map((sz) => {
-                  const isAvailable = availableSizes.length === 0 || inStockSizes.includes(sz);
+                  const isAvailable = availableSizes.length === 0 || availableSizes.includes(sz);
                   return (
                     <button
                       key={sz}
