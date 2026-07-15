@@ -38,7 +38,7 @@ export const publicNavLinks: NavLink[] = [
 export const authNavLinks: NavLink[] = [
   { label: 'Home', href: '/' },
   { label: 'Explore', href: '/explore' },
-  { label: 'Wishlist', href: '/dashboard/wishlist' },
   { label: 'Orders', href: '/dashboard/orders' },
   { label: 'Profile', href: '/dashboard/profile' },
+  { label: 'About', href: '/about' },
 ];
