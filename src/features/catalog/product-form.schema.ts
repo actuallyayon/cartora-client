@@ -19,6 +19,8 @@ export const productFormSchema = z.object({
     .refine((v) => Number.isInteger(Number(v)) && Number(v) >= 0, 'Enter a whole number'),
   tags: z.string().optional(),
   isFeatured: z.boolean().optional(),
+  isNewArrival: z.boolean().optional(),
+  isBestSeller: z.boolean().optional(),
   sizes: z.array(z.string()).optional(),
 });
 

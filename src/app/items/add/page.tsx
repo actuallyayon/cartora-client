@@ -42,6 +42,8 @@ function AddProductForm() {
       stock: '',
       tags: '',
       isFeatured: false,
+      isNewArrival: false,
+      isBestSeller: false,
       sizes: [],
     },
   });
@@ -71,6 +73,8 @@ function AddProductForm() {
               .filter(Boolean)
           : [],
         isFeatured: values.isFeatured,
+        isNewArrival: values.isNewArrival,
+        isBestSeller: values.isBestSeller,
         variants: values.sizes?.map((sz) => ({ name: 'Size', value: sz })) || [],
       },
       {
@@ -248,14 +252,34 @@ function AddProductForm() {
               </div>
             </div>
 
-            <label className="flex items-center gap-2 text-sm pt-4 border-t border-border">
-              <input
-                type="checkbox"
-                className="border-input h-4 w-4 rounded accent-primary"
-                {...register('isFeatured')}
-              />
-              Feature on homepage
-            </label>
+            <div className="pt-4 border-t border-border flex flex-wrap gap-6">
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  className="border-input h-4 w-4 rounded accent-primary"
+                  {...register('isFeatured')}
+                />
+                Feature on homepage
+              </label>
+              
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  className="border-input h-4 w-4 rounded accent-primary"
+                  {...register('isNewArrival')}
+                />
+                Mark as New Arrival
+              </label>
+              
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  className="border-input h-4 w-4 rounded accent-primary"
+                  {...register('isBestSeller')}
+                />
+                Mark as Best Seller
+              </label>
+            </div>
           </CardContent>
         </Card>
 

@@ -58,6 +58,8 @@ export interface Product {
   rating: { average: number; count: number };
   soldCount: number;
   isFeatured: boolean;
+  isNewArrival: boolean;
+  isBestSeller: boolean;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
@@ -88,6 +90,8 @@ export interface CreateProductPayload {
   stock: number;
   tags?: string[];
   isFeatured?: boolean;
+  isNewArrival?: boolean;
+  isBestSeller?: boolean;
   variants?: { name: string; value: string }[];
 }
 
@@ -103,6 +107,8 @@ export interface UpdateProductPayload {
   stock?: number;
   tags?: string[];
   isFeatured?: boolean;
+  isNewArrival?: boolean;
+  isBestSeller?: boolean;
   isActive?: boolean;
   variants?: { name: string; value: string }[];
 }

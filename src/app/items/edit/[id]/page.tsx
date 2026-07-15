@@ -43,6 +43,8 @@ function EditProductForm({ product }: { product: Product }) {
       stock: product.stock.toString(),
       tags: product.tags?.join(', ') || '',
       isFeatured: product.isFeatured ?? false,
+      isNewArrival: product.isNewArrival ?? false,
+      isBestSeller: product.isBestSeller ?? false,
       sizes: product.variants?.filter(v => v.name.toLowerCase() === 'size').map(v => v.value) || [],
     },
   });
@@ -76,6 +78,8 @@ function EditProductForm({ product }: { product: Product }) {
                 .filter(Boolean)
             : [],
           isFeatured: values.isFeatured,
+          isNewArrival: values.isNewArrival,
+          isBestSeller: values.isBestSeller,
           variants: values.sizes?.map((sz) => ({ name: 'Size', value: sz })) || [],
           isActive,
         },
@@ -258,14 +262,34 @@ function EditProductForm({ product }: { product: Product }) {
             </div>
 
             <div className="flex flex-col gap-3 pt-4 border-t border-border">
-              <label className="flex items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  className="border-input h-4 w-4 rounded accent-primary"
-                  {...register('isFeatured')}
-                />
-                Feature on homepage
-              </label>
+              <div className="flex flex-wrap gap-6">
+                <label className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    className="border-input h-4 w-4 rounded accent-primary"
+                    {...register('isFeatured')}
+                  />
+                  Feature on homepage
+                </label>
+                
+                <label className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    className="border-input h-4 w-4 rounded accent-primary"
+                    {...register('isNewArrival')}
+                  />
+                  Mark as New Arrival
+                </label>
+                
+                <label className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    className="border-input h-4 w-4 rounded accent-primary"
+                    {...register('isBestSeller')}
+                  />
+                  Mark as Best Seller
+                </label>
+              </div>
 
               <label className="flex items-center gap-2 text-sm">
                 <input
