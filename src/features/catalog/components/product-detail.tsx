@@ -33,23 +33,30 @@ export function ProductDetail({ product }: { product: Product }) {
   const categorySlug = product.category?.slug?.toLowerCase() || '';
   const isKids = categoryName.includes('kids') || categorySlug.includes('kids') || product.tags.includes('kids');
   const isClothing = isKids || ['mens', 'womens'].includes(categorySlug) || 
-    product.tags.some(tag => ['tshirt', 'jacket', 'pants', 'hoodie', 'sweater', 'top', 'dress', 'clothing', 'apparel'].includes(tag.toLowerCase()));
+    product.tags.some(tag => ['tshirt', 'jacket', 'pants', 'hoodie', 'sweater', 'top', 'dress', 'clothing', 'apparel', 'jersey'].includes(tag.toLowerCase()));
 
   // Admin's explicitly selected sizes
-  const availableSizes = product.variants
-    ?.filter((v) => v.name.toLowerCase() === 'size')
-    .map((v) => v.value) || [];
+  const sizeVariants = product.variants?.filter((v) => v.name.toLowerCase() === 'size') || [];
+  const availableSizes = sizeVariants.map((v) => v.value);
+  const inStockSizes = sizeVariants.filter((v) => v.stock > 0).map((v) => v.value);
   
   // All possible sizes to render
-  const allSizes = isClothing
+  let allSizes = isClothing
     ? isKids
       ? ['Age 10-11', 'Age 11-12', 'Age 13-14', 'Age 15-16']
       : ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL']
     : [];
 
-  const [selectedSize, setSelectedSize] = React.useState<string | null>(
-    availableSizes.length > 0 ? availableSizes[0] : (allSizes[0] || null)
-  );
+  if (availableSizes.length > 0) {
+    if (allSizes.length === 0) {
+      allSizes = [...availableSizes];
+    } else {
+      allSizes = Array.from(new Set([...allSizes, ...availableSizes]));
+    }
+  }
+
+  const defaultSize = inStockSizes.length > 0 ? inStockSizes[0] : (availableSizes.length > 0 ? availableSizes[0] : (allSizes[0] || null));
+  const [selectedSize, setSelectedSize] = React.useState<string | null>(defaultSize);
 
   const wished = wishlistIds?.includes(product.id) ?? false;
   const discount = discountPercent(product.price, product.compareAtPrice);
@@ -169,7 +176,7 @@ export function ProductDetail({ product }: { product: Product }) {
 
               <div className="mt-3 flex flex-wrap gap-2">
                 {allSizes.map((sz) => {
-                  const isAvailable = availableSizes.length === 0 || availableSizes.includes(sz);
+                  const isAvailable = availableSizes.length === 0 || inStockSizes.includes(sz);
                   return (
                     <button
                       key={sz}
