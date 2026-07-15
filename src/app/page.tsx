@@ -26,14 +26,14 @@ export default function HomePage() {
       <ProductSection
         title="New arrivals"
         subtitle="Fresh off the rack."
-        params={{ sort: 'newest', limit: 4 }}
-        viewAllHref="/explore?sort=newest"
+        params={{ newArrival: true, limit: 4 }}
+        viewAllHref="/explore?newArrival=true"
       />
       <ProductSection
         title="Best sellers"
         subtitle="What everyone's loving right now."
-        params={{ sort: 'popular', limit: 4 }}
-        viewAllHref="/explore?sort=popular"
+        params={{ bestSeller: true, limit: 4 }}
+        viewAllHref="/explore?bestSeller=true"
       />
       <Newsletter />
     </>

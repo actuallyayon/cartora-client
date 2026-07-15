@@ -70,6 +70,8 @@ function ExploreContent() {
     maxPrice: debouncedMax ? Number(debouncedMax) : undefined,
     page,
     limit: 12,
+    newArrival: searchParams.get('newArrival') === 'true' ? true : undefined,
+    bestSeller: searchParams.get('bestSeller') === 'true' ? true : undefined,
   };
 
   const { data, isLoading, isError } = useProducts(params);

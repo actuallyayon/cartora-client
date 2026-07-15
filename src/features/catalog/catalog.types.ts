@@ -73,6 +73,8 @@ export interface ProductListParams {
   maxPrice?: number;
   minRating?: number;
   featured?: boolean;
+  newArrival?: boolean;
+  bestSeller?: boolean;
   sort?: 'newest' | 'price-asc' | 'price-desc' | 'rating' | 'popular';
   page?: number;
   limit?: number;
