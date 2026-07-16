@@ -10,7 +10,7 @@ A full-featured, modern e-commerce storefront built with **Next.js 16**, **React
 
 ## 📸 Screenshot
 
-![Cartora Homepage](https://cartora-client.vercel.app/og-image.png)
+![Cartora Homepage](./public/screenshot.png)
 
 ---
 
