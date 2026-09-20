@@ -25,3 +25,15 @@ export function useGenerateProductDraft() {
     mutationFn: aiApi.generateProductDraft,
   });
 }
+
+export function useCompareProducts() {
+  return useMutation({
+    mutationFn: aiApi.compareProducts,
+  });
+}
+
+export function useOptimizeCart() {
+  return useMutation({
+    mutationFn: aiApi.optimizeCart,
+  });
+}

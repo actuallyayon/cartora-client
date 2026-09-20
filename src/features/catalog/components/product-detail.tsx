@@ -3,7 +3,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Check, Heart, Loader2, Minus, Plus, ShoppingCart, Star, Truck } from 'lucide-react';
+import { Check, Heart, Loader2, Minus, Plus, ShoppingCart, Star, Truck, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { formatPrice, discountPercent } from '@/lib/format';
@@ -251,6 +251,17 @@ export function ProductDetail({ product }: { product: Product }) {
               }}
             >
               <Heart className={cn('h-5 w-5', wished && 'fill-destructive text-destructive')} />
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              aria-label="Compare with AI"
+              className="gap-1.5 text-primary border-primary/30 hover:bg-primary/5"
+              onClick={() => router.push(`/compare?ids=${product.id}`)}
+            >
+              <Sparkles className="h-4 w-4" />
+              Compare
             </Button>
           </div>
 

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { formatPrice } from '@/lib/format';
 import { RequireAuth } from '@/features/auth/components/require-auth';
+import { AiCartOptimizer } from '@/features/ai/components/ai-cart-optimizer';
 import {
   useCart,
   useClearCart,
@@ -129,13 +130,20 @@ function CartView() {
           );
         })}
 
-        <button
-          type="button"
-          onClick={() => clearCart.mutate([])}
-          className="text-muted-foreground hover:text-destructive text-sm transition-colors"
-        >
-          Clear cart
-        </button>
+        <div className="flex items-center justify-between pt-2">
+          <button
+            type="button"
+            onClick={() => clearCart.mutate([])}
+            className="text-muted-foreground hover:text-destructive text-sm transition-colors"
+          >
+            Clear cart
+          </button>
+        </div>
+
+        {/* AI Cart Synergy Advisor */}
+        <div className="pt-4">
+          <AiCartOptimizer items={items} subtotal={cart?.subtotal ?? 0} />
+        </div>
       </div>
 
       {/* Summary */}

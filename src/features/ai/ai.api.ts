@@ -4,6 +4,8 @@ import type {
   AiChatResponse,
   AiProductInsights,
   AiGeneratedProductDraft,
+  AiProductComparisonResponse,
+  AiCartOptimizerResponse,
 } from '@/features/ai/ai.types';
 
 export const aiApi = {
@@ -29,6 +31,34 @@ export const aiApi = {
   }): Promise<AiGeneratedProductDraft> {
     const { data } = await api.post<ApiResponse<AiGeneratedProductDraft>>(
       '/ai/generate-product',
+      payload,
+    );
+    return data.data;
+  },
+
+  async compareProducts(payload: {
+    productIds: string[];
+    userPriority?: string;
+  }): Promise<AiProductComparisonResponse> {
+    const { data } = await api.post<ApiResponse<AiProductComparisonResponse>>(
+      '/ai/compare',
+      payload,
+    );
+    return data.data;
+  },
+
+  async optimizeCart(payload: {
+    items: Array<{
+      productId: string;
+      name: string;
+      price: number;
+      quantity: number;
+      category?: string;
+    }>;
+    userNote?: string;
+  }): Promise<AiCartOptimizerResponse> {
+    const { data } = await api.post<ApiResponse<AiCartOptimizerResponse>>(
+      '/ai/cart-optimizer',
       payload,
     );
     return data.data;

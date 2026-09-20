@@ -30,6 +30,7 @@ export interface NavLink {
 export const publicNavLinks: NavLink[] = [
   { label: 'Home', href: '/' },
   { label: 'Explore', href: '/explore' },
+  { label: 'AI Compare', href: '/compare' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ];
@@ -38,6 +39,7 @@ export const publicNavLinks: NavLink[] = [
 export const authNavLinks: NavLink[] = [
   { label: 'Home', href: '/' },
   { label: 'Explore', href: '/explore' },
+  { label: 'AI Compare', href: '/compare' },
   { label: 'Orders', href: '/dashboard/orders' },
   { label: 'Profile', href: '/dashboard/profile' },
   { label: 'About', href: '/about' },
