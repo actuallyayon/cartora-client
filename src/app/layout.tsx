@@ -8,6 +8,7 @@ import { QueryProvider } from '@/components/providers/query-provider';
 import { GoogleAuthProvider } from '@/components/providers/google-auth-provider';
 import { Navbar } from '@/components/shared/navbar';
 import { Footer } from '@/components/shared/footer';
+import { AiConcierge } from '@/features/ai/components/ai-concierge';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -50,6 +51,7 @@ export default function RootLayout({
               <Navbar />
               <main className="flex-1">{children}</main>
               <Footer />
+              <AiConcierge />
               <Toaster richColors position="top-right" />
             </GoogleAuthProvider>
           </QueryProvider>
