@@ -12,7 +12,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { RequireAuth } from '@/features/auth/components/require-auth';
-import { useTheme } from 'next-themes';
 import { useCart } from '@/features/cart/use-cart';
 import { useCheckout, useValidateCoupon } from '@/features/checkout/use-checkout';
 import { formatPrice } from '@/lib/format';
@@ -50,7 +49,6 @@ function PaymentForm({
   currency?: string;
   onSuccess: (orderNumber: string) => void;
 }) {
-  const { resolvedTheme } = useTheme();
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = React.useState(false);
@@ -76,7 +74,7 @@ function PaymentForm({
       });
 
       if (error) {
-        toast.error(error.message || 'Payment failed. Please try again.');
+        toast.error(error.message || 'Payment authentication failed');
         setIsProcessing(false);
       } else if (paymentIntent && paymentIntent.status === 'succeeded') {
         toast.success('Payment authorized successfully!');
@@ -93,8 +91,6 @@ function PaymentForm({
       onSuccess(orderNumber);
     }
   };
-
-  const isDark = resolvedTheme === 'dark';
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

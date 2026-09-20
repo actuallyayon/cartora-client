@@ -17,17 +17,15 @@ interface GoogleSignInButtonProps {
  * On successful credential exchange, the backend verifies the ID token, creates
  * or finds the user, and returns a JWT session cookie.
  */
+const emptySubscribe = () => () => {};
+
 export function GoogleSignInButton({ redirectTo }: GoogleSignInButtonProps) {
   const router = useRouter();
   const params = useSearchParams();
   const target = redirectTo ?? params.get('redirect') ?? '/dashboard';
   const googleSignIn = useGoogleSignIn();
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = React.useSyncExternalStore(emptySubscribe, () => true, () => false);
 
   const handleSuccess = (response: CredentialResponse) => {
     if (!response.credential) {

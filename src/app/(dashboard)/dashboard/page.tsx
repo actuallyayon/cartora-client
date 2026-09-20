@@ -9,7 +9,6 @@ import {
   User as UserIcon,
   Package,
   Calendar,
-  ChevronRight,
   ArrowRight,
   Loader2,
   MapPin,
