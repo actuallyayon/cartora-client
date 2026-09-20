@@ -15,6 +15,8 @@ import { RequireAuth } from '@/features/auth/components/require-auth';
 import { useCategories, useCreateProduct } from '@/features/catalog/use-catalog';
 import { ImageUpload } from '@/features/catalog/components/image-upload';
 import { productFormSchema, type ProductFormValues } from '@/features/catalog/product-form.schema';
+import { AiProductCopilot } from '@/features/ai/components/ai-product-copilot';
+import type { AiGeneratedProductDraft } from '@/features/ai/ai.types';
 
 const ADULT_SIZES = ['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'];
 const KIDS_SIZES = ['Age 10-11', 'Age 11-12', 'Age 13-14', 'Age 15-16'];
@@ -29,6 +31,8 @@ function AddProductForm() {
   const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
@@ -47,6 +51,33 @@ function AddProductForm() {
       sizes: [],
     },
   });
+
+  const handleApplyDraft = (draft: AiGeneratedProductDraft) => {
+    if (draft.name) setValue('name', draft.name, { shouldValidate: true });
+    if (draft.description) setValue('description', draft.description, { shouldValidate: true });
+    if (draft.categoryId) {
+      setValue('category', draft.categoryId, { shouldValidate: true });
+    } else if (draft.suggestedCategoryName && categories) {
+      const matched = categories.find(
+        (c) =>
+          c.name.toLowerCase() === draft.suggestedCategoryName.toLowerCase() ||
+          c.name.toLowerCase().includes(draft.suggestedCategoryName.toLowerCase()) ||
+          draft.suggestedCategoryName.toLowerCase().includes(c.name.toLowerCase()),
+      );
+      if (matched) setValue('category', matched.id, { shouldValidate: true });
+    }
+    if (draft.suggestedPrice) setValue('price', String(draft.suggestedPrice), { shouldValidate: true });
+    if (draft.suggestedCompareAtPrice) {
+      setValue('compareAtPrice', String(draft.suggestedCompareAtPrice), { shouldValidate: true });
+    }
+    if (draft.suggestedSku) setValue('sku', draft.suggestedSku, { shouldValidate: true });
+    if (draft.tags && draft.tags.length > 0) {
+      setValue('tags', draft.tags.join(', '), { shouldValidate: true });
+    }
+    if (!getValues('stock')) {
+      setValue('stock', '50', { shouldValidate: true });
+    }
+  };
 
   const submit = handleSubmit((values) => {
     if (images.length === 0) {
@@ -101,6 +132,9 @@ function AddProductForm() {
           Upload photos and details. It goes live on the store immediately.
         </p>
       </div>
+
+      {/* Gemini AI Copilot */}
+      <AiProductCopilot onApplyDraft={handleApplyDraft} currentValues={getValues()} />
 
       <form onSubmit={submit} className="space-y-6" noValidate>
         <Card>
