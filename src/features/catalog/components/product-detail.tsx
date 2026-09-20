@@ -15,6 +15,7 @@ import { ProductCard } from '@/features/catalog/components/product-card';
 import { useRelatedProducts } from '@/features/catalog/use-catalog';
 import type { Product } from '@/features/catalog/catalog.types';
 import { ProductReviews } from '@/features/reviews/components/product-reviews';
+import { AiProductInsights } from '@/features/ai/components/ai-product-insights';
 
 export function ProductDetail({ product }: { product: Product }) {
   const router = useRouter();
@@ -274,6 +275,9 @@ export function ProductDetail({ product }: { product: Product }) {
           ) : null}
         </div>
       </div>
+
+      {/* Gemini AI Intelligence Section */}
+      <AiProductInsights productId={product.id} />
 
       {/* Reviews Section */}
       <ProductReviews productId={product.id} />
